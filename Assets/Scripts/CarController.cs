@@ -7,6 +7,10 @@ using UnityEngine.InputSystem;
 
 public class CarController : MonoBehaviour
 {
+    // the collection of wheels
+    [SerializeField] private WheelCollider[] _wheelColliders;
+    // torque
+    [SerializeField] private float torque = 250.0f;
     private PlayerInput playerInput;
 
     private void Awake()
@@ -27,11 +31,20 @@ public class CarController : MonoBehaviour
 
         float acceleration = moveInput.y;
         float steering = moveInput.x;
-        Move(acceleration, steering, 0);
+        Move(acceleration, 0, 0);
     }
 
     private void Move(float acceleration, float steering, float braking)
     {
-        
+        // ensures the values are clamped
+        acceleration = Mathf.Clamp(acceleration, -1f, 1f);
+        // calculate the thrust torque
+        float thrustTorque = acceleration * torque;
+
+        // apply thrust torque to each wheel
+        foreach(var wheel in _wheelColliders)
+        {
+            wheel.motorTorque = thrustTorque;
+        }
     }
 }
