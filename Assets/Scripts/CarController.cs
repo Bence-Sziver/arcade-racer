@@ -35,6 +35,9 @@ public class CarController : MonoBehaviour
 
     private void Move(float acceleration, float steering, float braking)
     {
+        // Quaternion quaternion;
+        // Vector3 position;
+
         // ensures the values are clamped
         acceleration = Mathf.Clamp(acceleration, -1f, 1f);
         // calculate the thrust torque
@@ -44,6 +47,13 @@ public class CarController : MonoBehaviour
         foreach(var wheel in _wheelColliders)
         {
             wheel.motorTorque = thrustTorque;
+
+            // get the position and rotation of the wheel collider
+            // wheel.GetWorldPose(out position, out quaternion);
+            // reposition the game object with the mesh of the wheel
+            // wheel.transform.GetChild(0).transform.position = position;
+            // apply the rotation to the game object
+            // wheel.transform.GetChild(0).transform.rotation = quaternion;
         }
     }
 }
