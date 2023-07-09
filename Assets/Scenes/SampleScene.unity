@@ -2104,7 +2104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 58d1dbe3b1d15bf449023f10b2daa0dc,
     type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -2115,7 +2115,27 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d3e72c7b-9afe-4bcf-885f-91b44e9fa1a4
+    m_ActionName: Racing/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5275733352200776593}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: Braking
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 78b4d24f-0682-48c8-98e1-16c1f2168c6d
+    m_ActionName: Racing/Braking[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Racing
@@ -2142,6 +2162,7 @@ MonoBehaviour:
   _maxSteeringAngle: 30
   _maxBrakingTorque: 12000
   skidSoundEffect: {fileID: 8300000, guid: ddd7b366924f91a4f918eb5205033d1e, type: 3}
+  _skidThreshold: 0.4
 --- !u!82 &5275733352200776594
 AudioSource:
   m_ObjectHideFlags: 0

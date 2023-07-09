@@ -16,6 +16,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private float _skidThreshold = 0.4f;
     private PlayerInput playerInput;
     private AudioSource _audioSource;
+    private float braking;
 
     private void Awake()
     {
@@ -26,12 +27,9 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float moveInput = playerInput.actions["Move"].ReadValue<float>();
-        float steeringInput = playerInput.actions["Steer"].ReadValue<float>();
-        float brakingInput = playerInput.actions["Brake"].ReadValue<float>();
-        float acceleration = moveInput;
-        float steering = steeringInput;
-        float braking = brakingInput;
+        Vector2 moveInput = playerInput.actions["Move"].ReadValue<Vector2>();
+        float acceleration = moveInput.y;
+        float steering = moveInput.x;
         Move(acceleration, steering, braking);
     }
 
@@ -92,6 +90,17 @@ public class CarController : MonoBehaviour
         if (skidCount == 0 && _audioSource.isPlaying)
         {
             _audioSource.Stop();
+        }
+    }
+
+    public void Braking(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            braking = 1.0f;
+        }   else if (context.canceled)
+        {
+            braking = 0.0f;
         }
     }
 }
