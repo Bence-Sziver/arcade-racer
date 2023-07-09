@@ -51,9 +51,9 @@ public class CarController : MonoBehaviour
             // get the position and rotation of the wheel collider
             wheel.GetWorldPose(out position, out quaternion);
             // reposition the game object with the mesh of the wheel
-            wheel.transform.GetChild(0).transform.position = position;
+            // wheel.transform.GetChild(0).transform.position = position;
             // apply the rotation to the game object
-            wheel.transform.GetChild(0).transform.rotation = quaternion;
+            wheel.transform.GetChild(0).transform.localRotation = quaternion;
         }
     }
 }
