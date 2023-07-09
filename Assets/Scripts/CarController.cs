@@ -12,11 +12,15 @@ public class CarController : MonoBehaviour
     [SerializeField] private float _maxSteeringAngle = 30.0f;
     // maximum braking torque
     [SerializeField] private float _maxBrakingTorque = 550.0f;
+    [SerializeField] private AudioClip skidSoundEffect;
+    [SerializeField] private float _skidThreshold = 0.4f;
     private PlayerInput playerInput;
+    private AudioSource _audioSource;
 
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -24,17 +28,19 @@ public class CarController : MonoBehaviour
     {
         float moveInput = playerInput.actions["Move"].ReadValue<float>();
         float steeringInput = playerInput.actions["Steer"].ReadValue<float>();
-        // float brakingInput = playerInput.actions["Braking"]
+        float brakingInput = playerInput.actions["Brake"].ReadValue<float>();
         float acceleration = moveInput;
         float steering = steeringInput;
-        Move(acceleration, steering);
+        float braking = brakingInput;
+        Move(acceleration, steering, braking);
     }
 
-    private void Move(float acceleration, float steering)
+    private void Move(float acceleration, float steering, float braking)
     {
         // ensures the values are clamped
         acceleration = Mathf.Clamp(acceleration, -1f, 1f);
         steering = Mathf.Clamp(steering, -1f, 1f) * _maxSteeringAngle;
+        braking = Mathf.Clamp(braking, -1f, 1f) * _maxBrakingTorque;
         // calculate the thrust torque
         float thrustTorque = acceleration * torque;
 
@@ -49,10 +55,43 @@ public class CarController : MonoBehaviour
             // wheel.transform.GetChild(0).transform.SetPositionAndRotation(position, quaternion);
             _wheelColliders[i].transform.GetChild(0).Rotate(-_wheelColliders[i].rpm / 60 * 360 * Time.deltaTime, 0, 0);
             
+            // apply steering to the front wheels and braking to the rear
             if (i < 2)
             {
                 _wheelColliders[i].steerAngle = steering;
+            }   else
+            {
+                _wheelColliders[i].brakeTorque = braking;
             }
+        }
+        SkidCheck();
+    }
+
+    private void SkidCheck()
+    {
+        int skidCount = 0;
+        for (int i = 0; i < _wheelColliders.Length; i++)
+        {
+            // get the point on the ground where the wheel collider is touching
+            WheelHit wheelHit;
+            _wheelColliders[i].GetGroundHit(out wheelHit);
+
+            // check if there's any forward or sideway slipping
+            if (Mathf.Abs(wheelHit.forwardSlip) >= _skidThreshold || Mathf.Abs(wheelHit.sidewaysSlip) >= _skidThreshold) {
+                skidCount++;
+                // check the sound isn't playing
+                if (!_audioSource.isPlaying)
+                {
+                    // play the skidding sound effect
+                    _audioSource.PlayOneShot(skidSoundEffect);
+                }
+            }
+        }
+
+        // turn off the skidding sound if there is no wheels skidding
+        if (skidCount == 0 && _audioSource.isPlaying)
+        {
+            _audioSource.Stop();
         }
     }
 }
