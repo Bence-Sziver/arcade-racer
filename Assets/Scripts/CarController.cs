@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +9,9 @@ public class CarController : MonoBehaviour
     [SerializeField] private WheelCollider[] _wheelColliders;
     // torque
     [SerializeField] private float torque = 1200.0f;
+    [SerializeField] private float _maxSteeringAngle = 30.0f;
+    // maximum braking torque
+    [SerializeField] private float _maxBrakingTorque = 550.0f;
     private PlayerInput playerInput;
 
     private void Awake()
@@ -18,42 +19,40 @@ public class CarController : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-       
-    }
-
     // Update is called once per frame
     void Update()
     {
         float moveInput = playerInput.actions["Move"].ReadValue<float>();
-
+        float steeringInput = playerInput.actions["Steer"].ReadValue<float>();
+        // float brakingInput = playerInput.actions["Braking"]
         float acceleration = moveInput;
-        Move(acceleration, 0, 0);
+        float steering = steeringInput;
+        Move(acceleration, steering);
     }
 
-    private void Move(float acceleration, float steering, float braking)
+    private void Move(float acceleration, float steering)
     {
-        Quaternion quaternion;
-        Vector3 position;
-
         // ensures the values are clamped
         acceleration = Mathf.Clamp(acceleration, -1f, 1f);
+        steering = Mathf.Clamp(steering, -1f, 1f) * _maxSteeringAngle;
         // calculate the thrust torque
         float thrustTorque = acceleration * torque;
 
         // apply thrust torque to each wheel
-        foreach(var wheel in _wheelColliders)
+        for (int i = 0; i < _wheelColliders.Length; i++)
         {
-            wheel.motorTorque = thrustTorque;
-
+            _wheelColliders[i].motorTorque = thrustTorque;
             // get the position and rotation of the wheel collider
-            wheel.GetWorldPose(out position, out quaternion);
+            _wheelColliders[i].GetWorldPose(out Vector3 position, out Quaternion quaternion);
             // reposition the game object with the mesh of the wheel
-            // wheel.transform.GetChild(0).transform.position = position;
             // apply the rotation to the game object
-            wheel.transform.GetChild(0).transform.localRotation = quaternion;
+            // wheel.transform.GetChild(0).transform.SetPositionAndRotation(position, quaternion);
+            _wheelColliders[i].transform.GetChild(0).Rotate(-_wheelColliders[i].rpm / 60 * 360 * Time.deltaTime, 0, 0);
+            
+            if (i < 2)
+            {
+                _wheelColliders[i].steerAngle = steering;
+            }
         }
     }
 }
