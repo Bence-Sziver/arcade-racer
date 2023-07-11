@@ -7,10 +7,14 @@ public class CarController : MonoBehaviour
     private PlayerInput playerInput;
     private float acceleration;
     private float steering;
+    private bool isGrounded;
+
     public float speed;
     public float revSpeed;
     public float turnSpeed;
-    // public float maxSteerAngle;
+    public LayerMask groundLayer;
+    public float airDrag;
+    public float groundDrag;
 
     private void Awake()
     {
@@ -31,14 +35,33 @@ public class CarController : MonoBehaviour
         steering = moveInput.x;
         acceleration = Mathf.Clamp(acceleration, -1f, 1f);
         steering = Mathf.Clamp(steering, -1f, 1f);
+        transform.Rotate(0, steering * turnSpeed * Time.deltaTime * acceleration, 0, Space.World);
         acceleration *= acceleration > 0 ? speed : revSpeed;
 
         transform.position = sphereRb.transform.position;
-        transform.Rotate(0, steering * turnSpeed * Time.deltaTime, 0, Space.World);
+
+        RaycastHit hit;
+        isGrounded = Physics.Raycast(transform.position, -transform.up, out hit, 1f, groundLayer);
+        transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+
+        if (isGrounded)
+        {
+            sphereRb.drag = groundDrag;
+        }   else
+        {
+            sphereRb.drag = airDrag;
+        }
+
     }
 
     private void FixedUpdate()
     {
-        sphereRb.AddForce(transform.forward * acceleration, ForceMode.Acceleration);
+        if (isGrounded) 
+        {
+            sphereRb.AddForce(transform.forward * acceleration, ForceMode.Acceleration);
+        }   else
+        {
+            sphereRb.AddForce(transform.up * -30f);
+        }
     }
 }
