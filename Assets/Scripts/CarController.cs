@@ -9,6 +9,7 @@ public class CarController : MonoBehaviour
     private float acceleration;
     private float steering;
     private bool isGrounded;
+    public float gravitation;
 
     public float speed;
     public float revSpeed;
@@ -50,7 +51,7 @@ public class CarController : MonoBehaviour
         transform.position = sphereRb.transform.position;
 
         RaycastHit hit;
-        isGrounded = Physics.Raycast(transform.position, -transform.up, out hit, 1f, groundLayer);
+        isGrounded = Physics.Raycast(transform.position, -transform.up, out hit, 4f, groundLayer);
 
         Quaternion rotateTo = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
         transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, alignToGroundTime * Time.deltaTime);
@@ -66,7 +67,7 @@ public class CarController : MonoBehaviour
             sphereRb.AddForce(transform.forward * acceleration, ForceMode.Acceleration);
         }   else
         {
-            sphereRb.AddForce(transform.up * -40f);
+            sphereRb.AddForce(transform.up * -1 * gravitation);
         }
 
         carRb.MoveRotation(transform.rotation);
