@@ -1,75 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CarController : MonoBehaviour
 {
-    public Rigidbody sphereRb;
-    public Rigidbody carRb;
+    public Transform _centerOfMass;
+    public float motorTorque = 1500f;
+    public float maxSteer = 20f;
+    public float Throttle { get; set; }
+    public float Steer { get; set; }
+
+    private Rigidbody _rigidbody;
+    private Wheel[] wheels;
     private PlayerInput playerInput;
-    private float acceleration;
-    private float steering;
-    private bool isGrounded;
-    public float gravitation;
-
-    public float speed;
-    public float revSpeed;
-    public float turnSpeed;
-    public LayerMask groundLayer;
-    private float normalDrag;
-    public float modifiedDrag;
-    public float alignToGroundTime;
-
-    private void Awake()
-    {
-        playerInput = GetComponent<PlayerInput>();
-    }
 
     // Start is called before the first frame update
     void Start()
     {
-        sphereRb.transform.parent = null;
-        carRb.transform.parent = null;
-        normalDrag = sphereRb.drag;
+        playerInput = GetComponent<PlayerInput>();
+        _rigidbody = GetComponent<Rigidbody>();
+        _rigidbody.centerOfMass = _centerOfMass.localPosition;
+        wheels = GetComponentsInChildren<Wheel>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector2 moveInput = playerInput.actions["Move"].ReadValue<Vector2>();
-        acceleration = moveInput.y;
-        steering = moveInput.x;
-        acceleration = Mathf.Clamp(acceleration, -1f, 1f);
-        steering = Mathf.Clamp(steering, -1f, 1f);
+        
 
-        if (isGrounded)
+        foreach (var wheel in wheels)
         {
-            transform.Rotate(0, steering * turnSpeed * Time.deltaTime * acceleration, 0, Space.World);
+            wheel.SteerAngle = Steer * maxSteer;
+            wheel.Torque = Throttle * motorTorque;
         }
-
-        acceleration *= acceleration > 0 ? speed : revSpeed;
-
-        transform.position = sphereRb.transform.position;
-
-        RaycastHit hit;
-        isGrounded = Physics.Raycast(transform.position, -transform.up, out hit, 4f, groundLayer);
-
-        Quaternion rotateTo = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, alignToGroundTime * Time.deltaTime);
-
-        sphereRb.drag = isGrounded ? normalDrag : modifiedDrag;
-
-    }
-
-    private void FixedUpdate()
-    {
-        if (isGrounded) 
-        {
-            sphereRb.AddForce(transform.forward * acceleration, ForceMode.Acceleration);
-        }   else
-        {
-            sphereRb.AddForce(transform.up * -1 * gravitation);
-        }
-
-        carRb.MoveRotation(transform.rotation);
     }
 }
