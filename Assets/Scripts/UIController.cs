@@ -11,6 +11,7 @@ public class UIController : MonoBehaviour
     public Text UITextCurrentLapTime;
     public Text UITextLastLapTime;
     public Text UITextBestLapTime;
+    public Text UITextCarSpeed;
 
     public Player UpdateUIForPlayer;
 
@@ -18,6 +19,7 @@ public class UIController : MonoBehaviour
     private float currentLapTime;
     private float lastLapTime;
     private float bestLapTime;
+    private double carSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +57,12 @@ public class UIController : MonoBehaviour
         {
             bestLapTime = UpdateUIForPlayer.BestLapTime;
             UITextBestLapTime.text = bestLapTime < 1000000 ? $"BEST: {(int)bestLapTime / 60}:{(bestLapTime) % 60:00.000}" : "BEST: NONE";
+        }
+
+        if (UpdateUIForPlayer.CarSpeed != carSpeed)
+        {
+            carSpeed = UpdateUIForPlayer.CarSpeed;
+            UITextCarSpeed.text = $"SPEED: {(int)carSpeed} km/h";
         }
     }
 }

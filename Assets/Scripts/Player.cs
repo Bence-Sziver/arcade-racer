@@ -12,12 +12,15 @@ public class Player : MonoBehaviour
     public float CurrentLapTime { get; private set; } = 0;
     public int CurrentLap { get; private set; } = 0;
 
+    public double CarSpeed { get; private set; } = 0;
+
     private float lapTimerTimestamp;
     private int lastCheckpointPassed = 0;
     private Transform checkpointsParent;
     private int checkpointCount;
     private int checkpointLayer;
     private CarController carController;
+    private Rigidbody _rigidbody;
 
     private void Awake()
     {
@@ -26,6 +29,7 @@ public class Player : MonoBehaviour
         checkpointCount = checkpointsParent.childCount;
         checkpointLayer = LayerMask.NameToLayer("checkpoint");
         carController = GetComponent<CarController>();
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     // Start is called before the first frame update
@@ -44,6 +48,8 @@ public class Player : MonoBehaviour
             carController.Steer = GameManager.Instance.InputController.SteerInput;
             carController.Throttle = GameManager.Instance.InputController.ThrottleInput;
         }
+
+        CarSpeed = _rigidbody.velocity.magnitude;
     }
 
     void StartLap()
