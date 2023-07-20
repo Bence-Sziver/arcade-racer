@@ -2122,7 +2122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _centerOfMass: {fileID: 267543750}
-  motorTorque: 1000
+  motorTorque: 900
   maxSteer: 20
 --- !u!114 &1433702286
 MonoBehaviour:
@@ -2150,7 +2150,7 @@ GameObject:
   - component: {fileID: 1448206592}
   - component: {fileID: 1448206591}
   m_Layer: 5
-  m_Name: TextCurrentTime
+  m_Name: TextCurrentLapTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2637,10 +2637,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIRacePanel: {fileID: 443419566}
   UITextCurrentLap: {fileID: 910512292}
-  UITextCurrentTime: {fileID: 1448206592}
+  UITextCurrentLapTime: {fileID: 1448206592}
   UITextLastLapTime: {fileID: 496367132}
   UITextBestLapTime: {fileID: 139923487}
-  UpdateUIForPlayer: {fileID: 0}
+  UpdateUIForPlayer: {fileID: 1433702286}
 --- !u!1 &1669630673
 GameObject:
   m_ObjectHideFlags: 0

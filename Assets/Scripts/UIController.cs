@@ -8,14 +8,14 @@ public class UIController : MonoBehaviour
     public GameObject UIRacePanel;
 
     public Text UITextCurrentLap;
-    public Text UITextCurrentTime;
+    public Text UITextCurrentLapTime;
     public Text UITextLastLapTime;
     public Text UITextBestLapTime;
 
     public Player UpdateUIForPlayer;
 
-    private int currentLap;
-    private float currentTime;
+    private int currentLap = -1;
+    private float currentLapTime;
     private float lastLapTime;
     private float bestLapTime;
 
@@ -37,6 +37,24 @@ public class UIController : MonoBehaviour
         {
             currentLap = UpdateUIForPlayer.CurrentLap;
             UITextCurrentLap.text = $"LAP: {currentLap}";
+        }
+
+        if (UpdateUIForPlayer.CurrentLapTime != currentLapTime)
+        {
+            currentLapTime = UpdateUIForPlayer.CurrentLapTime;
+            UITextCurrentLapTime.text = $"TIME: {(int) currentLapTime / 60}:{(currentLapTime) % 60:00.000}";
+        }
+
+        if (UpdateUIForPlayer.LastLapTime != lastLapTime)
+        {
+            lastLapTime = UpdateUIForPlayer.LastLapTime;
+            UITextLastLapTime.text = $"LAST: {(int)lastLapTime / 60}:{(lastLapTime) % 60:00.000}";
+        }
+
+        if (UpdateUIForPlayer.BestLapTime != bestLapTime)
+        {
+            bestLapTime = UpdateUIForPlayer.BestLapTime;
+            UITextBestLapTime.text = bestLapTime < 1000000 ? $"BEST: {(int)bestLapTime / 60}:{(bestLapTime) % 60:00.000}" : "BEST: NONE";
         }
     }
 }
