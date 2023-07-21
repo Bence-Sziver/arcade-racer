@@ -7,6 +7,7 @@ public class CarController : MonoBehaviour
 {
     public Transform _centerOfMass;
     public float motorTorque = 1500f;
+    public int maxSpeed = 55;
     public float maxSteer = 20f;
     public float Throttle { get; set; }
     public float Steer { get; set; }
@@ -33,6 +34,7 @@ public class CarController : MonoBehaviour
         {
             wheel.SteerAngle = Steer * maxSteer;
             wheel.Torque = Throttle * motorTorque;
+            _rigidbody.velocity = Vector3.ClampMagnitude(_rigidbody.velocity, maxSpeed);
         }
     }
 }
