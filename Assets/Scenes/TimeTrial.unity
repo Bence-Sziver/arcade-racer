@@ -2238,9 +2238,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _centerOfMass: {fileID: 4129258193787756334}
-  motorTorque: 900
-  maxSpeed: 55
-  maxSteer: 20
+  motorTorque: 1000
+  maxSpeed: 65
+  maxSteer: 30
 --- !u!33 &296962654059666415
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4544,7 +4544,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6305732918698352473}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1069.7, y: 357, z: -2658.8}
+  m_LocalPosition: {x: -23.12, y: 3.4, z: -86.68}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
