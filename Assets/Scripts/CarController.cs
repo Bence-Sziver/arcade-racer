@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,8 +29,6 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
         foreach (var wheel in wheels)
         {
             wheel.SteerAngle = Steer * maxSteer;
