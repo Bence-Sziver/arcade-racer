@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
         // this is expensive, don't do in update()
         checkpointsParent = GameObject.Find("Checkpoints").transform;
         // checkpointCount = checkpointsParent.childCount;
-        checkpointCount = 15;
+        checkpointCount = 16;
         checkpointLayer = LayerMask.NameToLayer("checkpoint");
         barrierLayer = LayerMask.NameToLayer("barrier");
         carController = GetComponent<CarController>();
@@ -78,12 +78,12 @@ public class Player : MonoBehaviour
             return;
         }
 
-        // if (collider.gameObject.layer == barrierLayer)
-        // {
-        //     transform.position = new Vector3(GameObject.FindGameObjectsWithTag("Respawn")[lastCheckpointPassed - 1].transform.position.x, 2,
-        //      GameObject.FindGameObjectsWithTag("Respawn")[lastCheckpointPassed - 1].transform.position.z);
-        //     return;
-        // }
+        if (collider.gameObject.layer == barrierLayer)
+        {
+            transform.position = new Vector3(GameObject.FindGameObjectsWithTag("Respawn")[lastCheckpointPassed - 1].transform.position.x, 2,
+             GameObject.FindGameObjectsWithTag("Respawn")[lastCheckpointPassed - 1].transform.position.z);
+            return;
+        }
 
         if (collider.gameObject.name == "1")
         {
