@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,6 +51,8 @@ public class Player : MonoBehaviour
         {
             carController.Steer = GameManager.Instance.InputController.SteerInput;
             carController.Throttle = GameManager.Instance.InputController.ThrottleInput;
+        }   else {
+            carController.Throttle = 1;
         }
 
         CarSpeed = _rigidbody.velocity.magnitude;
