@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public enum ControlType { HumanInput, AI}
+    public enum ControlType { HumanInput, AI }
     public ControlType controlType = ControlType.HumanInput;
 
     public float BestLapTime { get; private set; } = Mathf.Infinity;
@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     private Transform checkpointsParent;
     private int checkpointCount;
     private int checkpointLayer;
+    private int barrierLayer;
     private CarController carController;
     private Rigidbody _rigidbody;
 
@@ -26,8 +27,10 @@ public class Player : MonoBehaviour
     {
         // this is expensive, don't do in update()
         checkpointsParent = GameObject.Find("Checkpoints").transform;
-        checkpointCount = checkpointsParent.childCount;
+        // checkpointCount = checkpointsParent.childCount;
+        checkpointCount = 15;
         checkpointLayer = LayerMask.NameToLayer("checkpoint");
+        barrierLayer = LayerMask.NameToLayer("barrier");
         carController = GetComponent<CarController>();
         _rigidbody = GetComponent<Rigidbody>();
     }
@@ -35,7 +38,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -70,13 +73,22 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter(Collider collider)
     {
         // if i'll want other triggers, ignore those
-        if (collider.gameObject.layer != checkpointLayer)
+        if (collider.gameObject.layer != checkpointLayer && collider.gameObject.layer != barrierLayer)
         {
             return;
         }
 
+        // if (collider.gameObject.layer == barrierLayer)
+        // {
+        //     transform.position = new Vector3(GameObject.FindGameObjectsWithTag("Respawn")[lastCheckpointPassed - 1].transform.position.x, 2,
+        //      GameObject.FindGameObjectsWithTag("Respawn")[lastCheckpointPassed - 1].transform.position.z);
+        //     return;
+        // }
+
         if (collider.gameObject.name == "1")
         {
+            Debug.Log("lastCheckpointPassed:" + lastCheckpointPassed);
+            Debug.Log("checkpointCount" + checkpointCount);
             // we just finished a lap
             if (lastCheckpointPassed == checkpointCount)
             {
@@ -94,6 +106,6 @@ public class Player : MonoBehaviour
         if (collider.gameObject.name == (lastCheckpointPassed + 1).ToString())
         {
             lastCheckpointPassed++;
-        } 
+        }
     }
 }
