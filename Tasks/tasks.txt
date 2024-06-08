@@ -1,0 +1,28 @@
+program:
+    javított car fizika (kevésbé túlkormányzott, nem billen fel ugrató után) ✔
+    barrier-ek pálya körül hogy ne lehessen szabadon haladni ✔
+    trigger collider láthatatlan barrier-ek is ha valahogy sikerülne föléjük ugrani, ez visszateleportál az utolsó checkpointra ✔
+    checkpoints
+    hosszabbított pálya hogy több autó férhessen el ✔
+    AI: NavMesh-el kezdés, ezt lecserélni waypointrendszerre (fel tudnám talán használni a checkpointokat is) + rubberbanding
+    navmesh -> csüökkenteni a felületet, stance
+    pickups (powerups)
+    menü a legvégén
+
+pdf:
+    terv: először tématerv majd arcade racing játékkategória ismertetői, (technológiák ismertetése mint Unity????), játéktervezés
+     (diagramok, classtervek, indoklás) ,pályakészítése, autófizika, autóreset, AI megvalósítása, pickupok megvalósítása, menü készítése, 
+
+    pontosan miről kell jobban(??) -> programozástechnikára fókusz, UML, kódrészlet, pszeudokód,
+
+Uv hétig
+
+tipikus hibák: kódrészletek, ábrák aláírni, hviatkozni, számozni. szövegek számát hivatkozni, irodalomjegyzékben hivatkozni 
+10 oldalnál elküldeni
+25-50 oldal mellékletek nélkül
+
+szerkesztés: word, latex
+átküldeni a pdf-et ellenőrzésekre
+fél oldalnál hosszabb kódrészlekteket, ábrákat mellékletbe!!!!! ábra, melléklet szöveg negyedét, max harmadát teheti ki
+informatikai intézet szabályzat
+sorkizárt már az elején
