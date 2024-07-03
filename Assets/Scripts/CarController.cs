@@ -36,4 +36,8 @@ public class CarController : MonoBehaviour
             _rigidbody.velocity = Vector3.ClampMagnitude(_rigidbody.velocity, maxSpeed);
         }
     }
+
+    void FixedUpdate() {
+        
+    }
 }

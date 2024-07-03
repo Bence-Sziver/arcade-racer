@@ -83,8 +83,10 @@ public class Player : MonoBehaviour
 
         if (collider.gameObject.layer == barrierLayer)
         {
+            _rigidbody.velocity = new Vector3(0,0,0);
             transform.position = new Vector3(GameObject.FindGameObjectsWithTag("Respawn")[lastCheckpointPassed - 1].transform.position.x, 2,
              GameObject.FindGameObjectsWithTag("Respawn")[lastCheckpointPassed - 1].transform.position.z);
+             transform.localEulerAngles = new Vector3(0,0,0);
             return;
         }
 
