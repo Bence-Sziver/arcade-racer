@@ -44,19 +44,19 @@ public class UIController : MonoBehaviour
         if (UpdateUIForPlayer.CurrentLapTime != currentLapTime)
         {
             currentLapTime = UpdateUIForPlayer.CurrentLapTime;
-            UITextCurrentLapTime.text = $"TIME: {(int) currentLapTime / 60}:{(currentLapTime) % 60:00.000}";
+            UITextCurrentLapTime.text = $"TIME: {(int) currentLapTime / 60}:{currentLapTime % 60:00.000}";
         }
 
         if (UpdateUIForPlayer.LastLapTime != lastLapTime)
         {
             lastLapTime = UpdateUIForPlayer.LastLapTime;
-            UITextLastLapTime.text = $"LAST: {(int)lastLapTime / 60}:{(lastLapTime) % 60:00.000}";
+            UITextLastLapTime.text = $"LAST: {(int)lastLapTime / 60}:{lastLapTime % 60:00.000}";
         }
 
         if (UpdateUIForPlayer.BestLapTime != bestLapTime)
         {
             bestLapTime = UpdateUIForPlayer.BestLapTime;
-            UITextBestLapTime.text = bestLapTime < 1000000 ? $"BEST: {(int)bestLapTime / 60}:{(bestLapTime) % 60:00.000}" : "BEST: NONE";
+            UITextBestLapTime.text = bestLapTime < 1000000 ? $"BEST: {(int)bestLapTime / 60}:{bestLapTime % 60:00.000}" : "BEST: NONE";
         }
 
         if (UpdateUIForPlayer.CarSpeed != carSpeed)

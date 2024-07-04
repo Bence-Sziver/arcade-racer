@@ -13,15 +13,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Braking",
-                    "type": "Button",
-                    "id": "78b4d24f-0682-48c8-98e1-16c1f2168c6d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -89,17 +80,6 @@
                     "groups": "",
                     "action": "Move",
                     "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2952d90e-a57d-47c5-9466-2b5d799f02b5",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Braking",
-                    "isComposite": false,
                     "isPartOfComposite": false
                 }
             ]

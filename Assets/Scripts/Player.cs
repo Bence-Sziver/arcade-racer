@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        // if i'll want other triggers, ignore those
+        // más triggerekhez
         if (collider.gameObject.layer != checkpointLayer && collider.gameObject.layer != barrierLayer)
         {
             return;
@@ -93,9 +93,7 @@ public class Player : MonoBehaviour
 
         if (collider.gameObject.name == "1")
         {
-            Debug.Log("lastCheckpointPassed:" + lastCheckpointPassed);
-            Debug.Log("checkpointCount" + checkpointCount);
-            // we just finished a lap
+            // kör teljesítve
             if (lastCheckpointPassed == checkpointCount)
             {
                 EndLap();
@@ -108,7 +106,6 @@ public class Player : MonoBehaviour
             return;
         }
 
-        // if we passed the next checkpoint in the sequence, update the lastest checkpoint
         if (collider.gameObject.name == (lastCheckpointPassed + 1).ToString())
         {
             lastCheckpointPassed++;
