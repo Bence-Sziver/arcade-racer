@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
             carController.Throttle = GameManager.Instance.InputController.ThrottleInput;
         }   else {
             carController.Throttle = 1;
+
         }
 
         CarSpeed = _rigidbody.velocity.magnitude;
