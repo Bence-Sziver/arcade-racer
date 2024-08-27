@@ -26,3 +26,29 @@ szerkesztés: word, latex
 fél oldalnál hosszabb kódrészlekteket, ábrákat mellékletbe!!!!! ábra, melléklet szöveg negyedét, max harmadát teheti ki
 informatikai intézet szabályzat
 sorkizárt már az elején
+
+
+júl.10-ei meetingből:
+-feladatkiírást témavezre bízni
+-fő fejezetek új oldalra kerüljenek
+--2.1-et már nem kell 
+-kódrészletek
+--szövegdobozban
+--1x1-es táblázatot
+--egységes fontméret
+---pl. tördeléssel a hosszú sorokat
+---szövegdobozban ugyanarra a fontméretet
+--kódrészleteket külön számozni
+---nem ábra
+---táblázatokat is
+-event függvények
+--rengeteg van, ez nem mind
+--ezt említeni -> ez redukált lista
+--a kép jó
+-irodalomjegyzékben valahova
+--utolsó megtekintés ideje
+--napra pontosan
+--akár lábjegyzetbe
+-végső verziót, párszor még előtte is elküldeni
+--időnként új példányt
+--egészet is
