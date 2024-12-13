@@ -57,6 +57,17 @@ public class Player : MonoBehaviour
         }
 
         CarSpeed = _rigidbody.velocity.magnitude;
+        if (GameManager.Instance.InputController.IsResetPressed) {
+            ResetPositionByKey();
+        }
+    }
+
+    void ResetPositionByKey() {
+         _rigidbody.velocity = new Vector3(0,0,0);
+            var lastCheckPoint = GameObject.FindGameObjectsWithTag("Respawn")[lastCheckpointPassed - 1];
+            var xCoord = lastCheckPoint.transform.position.x;
+            var zCoord = lastCheckPoint.transform.position.z;
+            transform.position = new Vector3(xCoord, 2, zCoord);
     }
 
     void StartLap()

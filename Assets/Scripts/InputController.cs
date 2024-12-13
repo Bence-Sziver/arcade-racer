@@ -7,6 +7,7 @@ public class InputController : MonoBehaviour
 {
     public float ThrottleInput { get; private set; }
     public float SteerInput { get; private set; }
+    public bool IsResetPressed { get; private set;}
 
     private PlayerInput playerInput;
 
@@ -19,7 +20,8 @@ public class InputController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {   
+        IsResetPressed = playerInput.actions["Reset"].IsPressed();
         Vector2 moveInput = playerInput.actions["Move"].ReadValue<Vector2>();
         ThrottleInput = moveInput.y;
         ThrottleInput = Mathf.Clamp(ThrottleInput, -1f, 1f);

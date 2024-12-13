@@ -1,8 +1,40 @@
 -->menü<--
 verseny
-pickup
 ai
+pickup
 pontozás
 hivatkozások (?)
 25-50 oldal ellenőrzése
 tartalomjegyzék számozás
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->billentyűvel reset<--
+later:
+kód clean-up
+new git repo
+checkpoints copy-paste etc.
+music maybe
+graphic szépítés
