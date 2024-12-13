@@ -1,5 +1,4 @@
--->menü<--
-verseny
+-->verseny<--
 ai
 pickup
 pontozás
@@ -30,8 +29,8 @@ tartalomjegyzék számozás
 
 
 
-
--->billentyűvel reset<--
+menü
+billentyűvel reset
 later:
 kód clean-up
 new git repo
