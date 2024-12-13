@@ -1,9 +1,8 @@
---pdf előírás
---teleportálás működik?
---hiányzó funkciók (egyszerűen, gyorsan, kettes/egyes verzió) (ai, pickups, verseny, menü, pontok)
---time.deltatime
---fixedupdate vs. update
---átfogalmazás/typo-k pár helyen
---hivatkozások ellenőrzése/hozzáadása
---tartalomjegyzék számozás
---említeni feladatkiírást
+--> pdf előírás <--
+teleportálás működik?
+hiányzó funkciók (egyszerűen, gyorsan, kettes/egyes verzió) (ai, pickups, verseny, menü, pontok)
+time.deltatime
+fixedupdate vs. update
+átfogalmazás/typo-k pár helyen
+25-50 oldal ellenőrzése
+tartalomjegyzék számozás
