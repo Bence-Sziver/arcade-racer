@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
             var xCoord = lastCheckPoint.transform.position.x;
             var zCoord = lastCheckPoint.transform.position.z;
             transform.position = new Vector3(xCoord, 2, zCoord);
-             transform.localEulerAngles = new Vector3(0,0,0);
+            //  transform.localEulerAngles = new Vector3(0,0,0);
             return;
         }
 

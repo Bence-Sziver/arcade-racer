@@ -26,10 +26,6 @@ public class Wheel : MonoBehaviour
         wheelCollider.GetWorldPose(out Vector3 pos, out Quaternion rot);
         wheelTransform.position = pos;
         wheelTransform.rotation = rot;
-    }
-
-    private void FixedUpdate()
-    {
         if (steer)
         {
             wheelCollider.steerAngle = SteerAngle;
@@ -39,5 +35,18 @@ public class Wheel : MonoBehaviour
         {
             wheelCollider.motorTorque = Torque;
         }
+    }
+
+    private void FixedUpdate()
+    {
+        // if (steer)
+        // {
+        //     wheelCollider.steerAngle = SteerAngle;
+        // }
+
+        // if (power)
+        // {
+        //     wheelCollider.motorTorque = Torque;
+        // }
     }
 }
