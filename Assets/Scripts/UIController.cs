@@ -7,13 +7,16 @@ public class UIController : MonoBehaviour
 {
     public GameObject UIRacePanel;
 
+    public Text UITextAllLaps;
     public Text UITextCurrentLap;
     public Text UITextCurrentLapTime;
     public Text UITextLastLapTime;
     public Text UITextBestLapTime;
     public Text UITextCarSpeed;
+    public Text UITextFinished;
 
     public Player UpdateUIForPlayer;
+    private int maxLaps = -1;
 
     private int currentLap = -1;
     private float currentLapTime;
@@ -33,6 +36,15 @@ public class UIController : MonoBehaviour
         if (UpdateUIForPlayer == null)
         {
             return;
+        }
+
+        if (UpdateUIForPlayer.CurrentLap == GameManager.Instance.numberOfLaps + 1) {
+            UITextFinished.text = $"You finished {UpdateUIForPlayer.PlayerPosition} place";
+        }
+
+        if (GameManager.Instance.numberOfLaps != maxLaps) {
+            maxLaps = GameManager.Instance.numberOfLaps;
+            UITextAllLaps.text = $"/{maxLaps}";
         }
 
         if (UpdateUIForPlayer.CurrentLap != currentLap)

@@ -1,9 +1,6 @@
 -->verseny<--
 ai
 pickup
-pontozás
-hivatkozások (?)
-25-50 oldal ellenőrzése
 tartalomjegyzék számozás
 
 

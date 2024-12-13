@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     public int CurrentLap { get; private set; } = 0;
 
     public double CarSpeed { get; private set; } = 0;
+    public bool IsFinished {get; private set;}
+    public int PlayerPosition {get; private set;} = GameManager.Instance.numberOfEnemies;
 
     private float lapTimerTimestamp;
     private int lastCheckpointPassed = 0;
@@ -72,7 +74,6 @@ public class Player : MonoBehaviour
 
     void StartLap()
     {
-        Debug.Log("StartLap!");
         CurrentLap++;
         lastCheckpointPassed = 1;
         lapTimerTimestamp = Time.time;
@@ -82,7 +83,6 @@ public class Player : MonoBehaviour
     {
         LastLapTime = Time.time - lapTimerTimestamp;
         BestLapTime = Mathf.Min(LastLapTime, BestLapTime);
-        Debug.Log("EndLap! - Lap time was " + LastLapTime + " seconds");
     }
 
     private void OnTriggerEnter(Collider collider)
