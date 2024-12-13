@@ -62,6 +62,10 @@ public class Player : MonoBehaviour
         if (GameManager.Instance.InputController.IsResetPressed) {
             ResetPositionByKey();
         }
+
+        if (GameManager.Instance.InputController.IsEscapePressed) {
+            PauseMenu();
+        }
     }
 
     void ResetPositionByKey() {
@@ -70,6 +74,11 @@ public class Player : MonoBehaviour
             var xCoord = lastCheckPoint.transform.position.x;
             var zCoord = lastCheckPoint.transform.position.z;
             transform.position = new Vector3(xCoord, 2, zCoord);
+    }
+
+    void PauseMenu() {
+        Time.timeScale = 0;
+        
     }
 
     void StartLap()

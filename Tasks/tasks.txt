@@ -1,6 +1,7 @@
 -->verseny<--
 ai
 pickup
+írd le mit csináltál
 tartalomjegyzék számozás
 
 

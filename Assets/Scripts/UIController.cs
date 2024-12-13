@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class UIController : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public class UIController : MonoBehaviour
     public Text UITextFinished;
 
     public Player UpdateUIForPlayer;
+    public GameObject UIPausePanel;
     private int maxLaps = -1;
 
     private int currentLap = -1;
@@ -27,7 +30,7 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        UIPausePanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -40,6 +43,7 @@ public class UIController : MonoBehaviour
 
         if (UpdateUIForPlayer.CurrentLap == GameManager.Instance.numberOfLaps + 1) {
             UITextFinished.text = $"You finished {UpdateUIForPlayer.PlayerPosition} place";
+            StartCoroutine(QuittingCoroutine());
         }
 
         if (GameManager.Instance.numberOfLaps != maxLaps) {
@@ -77,4 +81,10 @@ public class UIController : MonoBehaviour
             UITextCarSpeed.text = $"SPEED: {(int)carSpeed} km/h";
         }
     }
+
+    IEnumerator QuittingCoroutine() {
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene("MainMenu");
+    }
 }
+
