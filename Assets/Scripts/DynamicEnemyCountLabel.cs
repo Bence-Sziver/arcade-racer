@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class DynamicEnemyCountLabel : MonoBehaviour
 {
- 
     Text text;
 
     private void Start()
@@ -17,6 +16,5 @@ public class DynamicEnemyCountLabel : MonoBehaviour
     {
         text.text = value.ToString();
         GameManager.Instance.numberOfEnemies = (int) value;
-
     }
 }

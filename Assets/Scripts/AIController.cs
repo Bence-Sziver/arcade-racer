@@ -8,8 +8,8 @@ public class AIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < GameManager.Instance.numberOfEnemies; i++) {
-            var car = GameObject.Instantiate(aiCar, new Vector3(-50, 5, -157), Quaternion.identity);
+        for (int i = 0, j = 0; i < GameManager.Instance.numberOfEnemies; i++, j += 10) {
+            var car = GameObject.Instantiate(aiCar, new Vector3(-50, 5, -157 - j), Quaternion.identity);
         }
     }
 

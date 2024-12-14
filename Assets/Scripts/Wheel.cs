@@ -36,17 +36,4 @@ public class Wheel : MonoBehaviour
             wheelCollider.motorTorque = Torque;
         }
     }
-
-    private void FixedUpdate()
-    {
-        // if (steer)
-        // {
-        //     wheelCollider.steerAngle = SteerAngle;
-        // }
-
-        // if (power)
-        // {
-        //     wheelCollider.motorTorque = Torque;
-        // }
-    }
 }

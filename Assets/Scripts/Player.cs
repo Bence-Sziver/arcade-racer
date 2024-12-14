@@ -27,20 +27,20 @@ public class Player : MonoBehaviour
     private Rigidbody _rigidbody;
     private float lastError;
     private float integral;
-    private float turboMaxTime = 5f;
-    private float turboCurrentTime;
-    private bool isTurboTime;
-    private bool firstTurbo = true;
 
     public String Pickup {get; set;} = "";
     public GameObject oil;
     public GameObject missile;
+    private float pickupTimer = 0f;
+    private float usePickupTime = 10f;
+    private bool hasPickup;
+    private float boomTimer = 0f;
+    public bool IsBoom {get; set;}
 
     private void Awake()
     {
         // this is expensive, don't do in update()
         checkpointsParent = GameObject.Find("Checkpoints").transform;
-        // checkpointCount = checkpointsParent.childCount;
         checkpointCount = 36;
         checkpointLayer = LayerMask.NameToLayer("checkpoint");
         barrierLayer = LayerMask.NameToLayer("barrier");
@@ -76,54 +76,107 @@ public class Player : MonoBehaviour
         if (GameManager.Instance.InputController.IsEscapePressed) {
             PauseMenu();
         }
-        if (Pickup == "turbo") {
+        if (Pickup == "Turbo") {
             Turbo();
-            if (isTurboTime) {
-                turboCurrentTime += Time.deltaTime;
-                if (turboCurrentTime > turboMaxTime) {
-                    isTurboTime = false;
-                    turboCurrentTime = 0f;
-                    Pickup = "";
-                    firstTurbo = true;
-                }
-            }
         }
-        if (Pickup == "oil") {
+        if (Pickup == "Oil") {
             Oil();
         }
-        if (Pickup == "torpedo") {
+        if (Pickup == "Torpedo") {
             Torpedo();
         }
-        if (Pickup == "bomb") {
+        if (Pickup == "Bomb") {
             Bomb();
+        }
+
+        if (IsBoom) {
+            boomTimer += Time.deltaTime;
+            if (boomTimer > 1f) {
+                boomTimer = 0f;
+                IsBoom = false;
+            }
+        }
+
+        if (hasPickup) {
+            pickupTimer += Time.deltaTime;
         }
     }
 
     void Turbo() {
-        if (firstTurbo && GameManager.Instance.InputController.IsSpacePressed) {
-            isTurboTime = true;
-            firstTurbo = !firstTurbo;
-            _rigidbody.velocity *= 10f;
+        if (controlType == ControlType.AI && hasPickup == false) {
+            hasPickup = true;
+        }
+        if (controlType == ControlType.HumanInput && GameManager.Instance.InputController.IsSpacePressed) {
+            _rigidbody.velocity *= 2f;
+            Pickup = "";
+        }
+
+        if (controlType == ControlType.AI) {
+            AITurbo();
+        }
+    }
+
+    void AITurbo() {
+        if (pickupTimer > usePickupTime) {
+            hasPickup = false;
+            pickupTimer = 0f;
+            _rigidbody.velocity *= 2f;
+            Pickup = "";
         }
     }
 
     void Oil() {
-        if (GameManager.Instance.InputController.IsSpacePressed) {
+        if (controlType == ControlType.AI && hasPickup == false) {
+            hasPickup = true;
+        }
+        if (controlType == ControlType.HumanInput && GameManager.Instance.InputController.IsSpacePressed) {
             Pickup = "";
-            Instantiate(oil);
+            Instantiate(oil, transform.position - transform.forward * 3 - new Vector3(0, 1, 0), Quaternion.identity);
+        }
+
+        if (controlType == ControlType.AI) {
+            AIOil();
+        }
+    }
+
+    void AIOil() {
+        if (pickupTimer > usePickupTime) {
+            hasPickup = false;
+            pickupTimer = 0f;
+            Instantiate(oil, transform.position - transform.forward * 3 - new Vector3(0, 1, 0), Quaternion.identity);
+            Pickup = "";
         }
     }
 
     void Torpedo() {
-        if (GameManager.Instance.InputController.IsSpacePressed) {
+        if (controlType == ControlType.AI && hasPickup == false) {
+            hasPickup = true;
+        }
+        if (controlType == ControlType.HumanInput && GameManager.Instance.InputController.IsSpacePressed) {
             Pickup = "";
-            Instantiate(missile);
+            GameObject rocket = Instantiate(missile, transform.position + transform.forward * 3, Quaternion.identity);
+            rocket.GetComponent<Rigidbody>().AddForce(transform.forward * 100);
+        }
+
+        if (controlType == ControlType.AI) {
+            AITorpedo();
+        }
+    }
+
+    void AITorpedo() {
+        if (pickupTimer > usePickupTime) {
+            hasPickup = false;
+            pickupTimer = 0f;
+            GameObject rocket = Instantiate(missile, transform.position + transform.forward * 3, Quaternion.identity);
+            rocket.GetComponent<Rigidbody>().AddForce(transform.forward * 100);
+            Pickup = "";
         }
     }
 
     void Bomb() {
+        IsBoom = true;
         Pickup = "";
-
+        _rigidbody.velocity = new Vector3(0,0,0);
     }
 
     float AIControl() {
@@ -160,19 +213,19 @@ public class Player : MonoBehaviour
     }   
 
     void ResetPositionByKey() {
-         _rigidbody.velocity = new Vector3(0,0,0);
-            var lastCheckPoint = GameObject.FindGameObjectsWithTag("Respawn")[lastCheckpointPassed - 1];
-            var xCoord = lastCheckPoint.transform.position.x;
-            var zCoord = lastCheckPoint.transform.position.z;
-            transform.position = new Vector3(xCoord, 2, zCoord);
-    }
-
-    void ResetAIPosition() {
-        _rigidbody.velocity = new Vector3(0,0,0);
-            var lastCheckPoint = GameObject.FindGameObjectsWithTag("Respawn")[lastCheckpointPassed - 1];
-            var xCoord = lastCheckPoint.transform.position.x;
-            var zCoord = lastCheckPoint.transform.position.z;
-            transform.position = new Vector3(xCoord, 2, zCoord);
+        if (gameObject.name == "Car") {
+            _rigidbody.velocity = new Vector3(0,0,0);
+         GameObject lastCheckPoint;
+         if (lastCheckpointPassed == 0) {
+            return;
+         }  else {
+            lastCheckPoint = GameObject.FindGameObjectsWithTag("Respawn")[lastCheckpointPassed - 1];
+         }
+        var xCoord = lastCheckPoint.transform.position.x;
+        var zCoord = lastCheckPoint.transform.position.z;
+        transform.position = new Vector3(xCoord, 2, zCoord);
+        transform.rotation = new Quaternion(0, 0, 0, 0);
+        }
     }
 
     void PauseMenu() {
@@ -200,16 +253,16 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (Pickup != "" && collider.gameObject.tag == "Pickup") {
+        if (Pickup == "" && collider.gameObject.tag == "Pickup") {
             int rand = UnityEngine.Random.Range(0, 3);
             if (rand == 0) {
-                Pickup = "turbo";
+                Pickup = "Turbo";
             }   else if (rand == 1) {
-                Pickup = "oil";
+                Pickup = "Oil";
             }   else if (rand == 2) {
-                Pickup = "torpedo";
+                Pickup = "Torpedo";
             }   else if (rand == 3) {
-                Pickup = "bomb";
+                Pickup = "Bomb";
             }
             Debug.Log(Pickup);
             return;
@@ -222,13 +275,11 @@ public class Player : MonoBehaviour
             var xCoord = lastCheckPoint.transform.position.x;
             var zCoord = lastCheckPoint.transform.position.z;
             transform.position = new Vector3(xCoord, 2, zCoord);
-            //  transform.localEulerAngles = new Vector3(0,0,0);
             return;
         }
 
         if (collider.gameObject.name == "1")
         {
-            // kör teljesítve
             if (lastCheckpointPassed == checkpointCount)
             {
                 EndLap();

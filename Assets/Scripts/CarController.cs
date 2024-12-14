@@ -15,12 +15,10 @@ public class CarController : MonoBehaviour
 
     private Rigidbody _rigidbody;
     private Wheel[] wheels;
-    private PlayerInput playerInput;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.centerOfMass = _centerOfMass.localPosition;
         wheels = GetComponentsInChildren<Wheel>();

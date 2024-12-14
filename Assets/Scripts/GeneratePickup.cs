@@ -19,7 +19,6 @@ public class GeneratePickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         parent.SpawnPickup(transform.position, transform.rotation);
-        // other.gameObject.GetComponent<Player>().BestLapTime;
         Destroy(gameObject);
     }
 }
