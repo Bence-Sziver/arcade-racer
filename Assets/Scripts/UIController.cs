@@ -41,6 +41,12 @@ public class UIController : MonoBehaviour
             return;
         }
 
+        if (Time.timeScale == 0) {
+            UIPausePanel.SetActive(true);
+        }   else {
+            UIPausePanel.SetActive(false);
+        }
+
         if (UpdateUIForPlayer.CurrentLap == GameManager.Instance.numberOfLaps + 1) {
             UITextFinished.text = $"You finished {UpdateUIForPlayer.PlayerPosition} place";
             StartCoroutine(QuittingCoroutine());

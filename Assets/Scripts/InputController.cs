@@ -9,6 +9,7 @@ public class InputController : MonoBehaviour
     public float SteerInput { get; private set; }
     public bool IsResetPressed { get; private set;}
     public bool IsEscapePressed { get; private set;}
+    public bool IsSpacePressed { get; private set;}
 
     private PlayerInput playerInput;
 
@@ -24,6 +25,7 @@ public class InputController : MonoBehaviour
     {   
         IsResetPressed = playerInput.actions["Reset"].IsPressed();
         IsEscapePressed = playerInput.actions["Escape"].IsPressed();
+        IsSpacePressed = playerInput.actions["Pickup"].IsPressed();
         Vector2 moveInput = playerInput.actions["Move"].ReadValue<Vector2>();
         ThrottleInput = moveInput.y;
         ThrottleInput = Mathf.Clamp(ThrottleInput, -1f, 1f);

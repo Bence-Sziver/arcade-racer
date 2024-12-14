@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         InputController = GetComponentInChildren<InputController>();
-        numberOfLaps = -1;
+        numberOfLaps = 4;
+        numberOfEnemies = 4;
         SceneManager.LoadScene("MainMenu");
     }
 

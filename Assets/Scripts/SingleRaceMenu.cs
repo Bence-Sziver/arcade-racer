@@ -8,7 +8,6 @@ public class SingleRaceMenu : MonoBehaviour
 {
     // Start is called before the first frame update
     public Button buttonComponent;
-    private Button button;
     // Start is called before the first frame update
     void Start()
     {
